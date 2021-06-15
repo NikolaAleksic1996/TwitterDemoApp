@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="UTF-8">
+    <title> {% block title %} Welcome twitter! {% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+    {% block body %}
+        {{ message }}
+    {% endblock %}
+
+{% block javascritps %}{% endblock %}
+</body>
+</html>
