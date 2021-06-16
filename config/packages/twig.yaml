@@ -3,3 +3,6 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     exception_controller: null
+#global variables in twig
+    globals:
+        message: '%hello_message%'
