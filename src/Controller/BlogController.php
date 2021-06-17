@@ -4,11 +4,8 @@
 namespace App\Controller;
 
 
-use App\Service\Greeting;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\TwigBundle\DependencyInjection\Compiler\TwigEnvironmentPass;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -18,6 +15,7 @@ use Symfony\Component\Routing\RouterInterface;
 /**
  * Class BlogController
  * @package App\Controller
+ * @Route("/blog")
  */
 class BlogController extends AbstractController
 {
@@ -35,14 +33,16 @@ class BlogController extends AbstractController
         $this->router = $router;
     }
 
+    /*parameters {name} changes the Response object, name parameter (argument) add to this action and
+      it will be automatically injected for us
+    indexAction(Request $request)  ,   greet($request->get('name'))
+    */
+
     /**
      * @return Response
      * @Route("/", name="blog_index")
      */
-    /*parameters {name} changes the Response object, name parameter (argument) add to this action and
-    //it will be automatically injected for us
-    indexAction(Request $request)  ,   greet($request->get('name'))
-    */
+
     public function indexAction(): Response
     {
         $html = $this->render('blog/index.html.twig', [
@@ -63,10 +63,11 @@ class BlogController extends AbstractController
             'text' => 'A random text npr '.rand(1, 500),
             'date' => new \DateTime(),
         ];
+        //dump($posts);die;
         $this->session->set('posts', $posts);
 
         /*
-         *after add post, we want it to take us to the home page (blog_index)
+         * after add post, we want it to take us to the home page (blog_index)
          */
         return new RedirectResponse($this->router->generate('blog_index'));
     }
@@ -87,7 +88,7 @@ class BlogController extends AbstractController
 
         $html = $this->render('blog/post.html.twig',[
             'id' => $id,
-            'post' => $posts[$id],
+            'posts' => $posts[$id],
         ]);
 
         return new Response($html);
