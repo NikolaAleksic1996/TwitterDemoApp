@@ -71,6 +71,7 @@ class MicroPostController extends AbstractController
     /**
      * @param MicroPost $microPost
      * @param Request $request
+     * @return RedirectResponse|Response
      * @Route ("/edit/{id}", name="micro_post_edit")
      */
     public function editAction(MicroPost $microPost, Request $request)
@@ -93,6 +94,7 @@ class MicroPostController extends AbstractController
 
     /**
      * @param MicroPost $microPost
+     * @return RedirectResponse
      * @Route("/delete/{id}", name="micro_post_delete")
      */
     public function deleteAction(MicroPost $microPost): RedirectResponse
@@ -132,7 +134,7 @@ class MicroPostController extends AbstractController
     /**
      * @Route("/{id}", name="micro_post_postAction")
      */
-    public function postAction($id)
+    public function postAction($id): Response
     {
         $post = $this->microPostRepository->find($id);
 
