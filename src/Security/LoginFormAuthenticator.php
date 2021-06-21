@@ -58,13 +58,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
             && $request->isMethod('POST');
     }
 
-    public function getCredentials(Request $request)
+    public function getCredentials(Request $request): array
     {
         // dd($request->request->all());
         //        $request->getSession()->set(
 //            Security::LAST_USERNAME,
 //            $credentials['email']
 //        );
+
 
         return [
             'username' => $request->request->get('username'),
@@ -83,21 +84,20 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 //            throw new InvalidCsrfTokenException();
 //        }
 //
-        $user = $this->entityManager->getRepository(User::class)->findOneBy(['userName' => $credentials['username']]);
         //dd($user);
 //
 //        if (!$user) {
 //            throw new UsernameNotFoundException('Email could not be found.');
 //        }
 //
-        return $user;
+        return $this->entityManager->getRepository(User::class)->findOneBy(['userName' => $credentials['username']]);
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, UserInterface $user): bool
     {
         //dd($user);
-        //return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-        return true;
+        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+
     }
 
     /**
@@ -108,9 +108,14 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 //        //return $credentials['password'];
 //    }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
     {
+        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+            return new RedirectResponse($targetPath);
+        }
+
         return new RedirectResponse($this->router->generate('micro_post_index'));
+        //return new RedirectResponse($this->router->generate('micro_post_index_admin'));
 //        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
 //            return new RedirectResponse($targetPath);
 //        }
@@ -119,8 +124,8 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 //        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
-    protected function getLoginUrl()
+    protected function getLoginUrl(): string
     {
-        // return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }
