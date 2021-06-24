@@ -20,6 +20,7 @@ use Symfony\Component\Routing\RouterInterface;
 /**
  * Class MicroPostController
  * @package App\Controller
+ * @Route("/micro-post")
  */
 class MicroPostController extends AbstractController
 {
@@ -70,7 +71,7 @@ class MicroPostController extends AbstractController
     }
 
     /**
-     * @Route ("/micro-post", name="micro_post_index")
+     * @Route ("/", name="micro_post_index")
      */
     public function indexAction(): Response
     {
@@ -85,7 +86,7 @@ class MicroPostController extends AbstractController
      * @param MicroPost $microPost
      * @param Request $request
      * @return RedirectResponse|Response
-     * @Route ("/micro-post/edit/{id}", name="micro_post_edit")
+     * @Route ("/edit/{id}", name="micro_post_edit")
      */
     public function editAction(MicroPost $microPost, Request $request)
     {
@@ -108,7 +109,7 @@ class MicroPostController extends AbstractController
     /**
      * @param MicroPost $microPost
      * @return RedirectResponse
-     * @Route("/micro-post/delete/{id}", name="micro_post_delete")
+     * @Route("/delete/{id}", name="micro_post_delete")
      */
     public function deleteAction(MicroPost $microPost): RedirectResponse
     {
@@ -122,7 +123,7 @@ class MicroPostController extends AbstractController
 
 
     /**
-     * @Route ("/micro-post/add", name="micro_post_add")
+     * @Route ("/add", name="micro_post_add")
      */
     public function addPostAction(Request $request)
     {
@@ -145,7 +146,7 @@ class MicroPostController extends AbstractController
     }
 
     /**
-     * @Route("/micro-post/{id}", name="micro_post_postAction")
+     * @Route("/{id}", name="micro_post_postAction")
      */
     public function postAction($id): Response
     {

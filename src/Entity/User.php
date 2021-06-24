@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -50,6 +52,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=MicroPost::class, mappedBy="user")
+     */
+    private $microPosts;
+
+    public function __construct()
+    {
+        $this->microPosts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -148,6 +160,36 @@ class User implements UserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MicroPost[]
+     */
+    public function getMicroPosts(): Collection
+    {
+        return $this->microPosts;
+    }
+
+    public function addMicroPost(MicroPost $microPost): self
+    {
+        if (!$this->microPosts->contains($microPost)) {
+            $this->microPosts[] = $microPost;
+            $microPost->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMicroPost(MicroPost $microPost): self
+    {
+        if ($this->microPosts->removeElement($microPost)) {
+            // set the owning side to null (unless already changed)
+            if ($microPost->getUser() === $this) {
+                $microPost->setUser(null);
+            }
+        }
 
         return $this;
     }

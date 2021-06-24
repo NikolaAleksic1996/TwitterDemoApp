@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\MicroPost;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -32,7 +33,29 @@ class UserFixture extends Fixture
             'test'
         ));
 
+        $user1 = new User();
+        $user1->setUserName('kole_kole1');
+        $user1->setFullName('Milan Aleksic');
+        $user1->setEmail('al_mil@gmail.com');
+        $user1->setPassword($this->passwordEncoder->encodePassword(
+            $user,
+            'test'
+        ));
+
+        $microPost = new MicroPost();
+        $microPost->setText('First post on Twitter');
+        $microPost->setCreatedAt(new \DateTime('now'));
+        $microPost->setUser($user);
+
+        $microPost1 = new MicroPost();
+        $microPost1->setText('Second post on Twitter');
+        $microPost1->setCreatedAt(new \DateTime('now'));
+        $microPost1->setUser($user);
+
+        $manager->persist($microPost);
+        $manager->persist($microPost1);
         $manager->persist($user);
+        $manager->persist($user1);
         $manager->flush();
     }
 }
