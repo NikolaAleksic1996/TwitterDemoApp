@@ -3,19 +3,29 @@
 namespace App\DataFixtures;
 
 use App\Entity\MicroPost;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class MicroPostFixtures extends Fixture
+class MicroPostFixtures extends BaseFixtures 
 {
-    public function load(ObjectManager $manager)
+
+    private static $microPostTitles = [
+        'Why Asteroids Taste Like Bacon',
+        'Life on Planet Mercury: Tan, Relaxing and Fabulous',
+        'Light Speed Travel: Fountain of Youth or Fallacy',
+    ];
+
+    public function loadData(ObjectManager $manager)
     {
-//      $microPost = new MicroPost();
-//      $microPost->setText('First post on Twitter');
-//      $microPost->setCreatedAt(new \DateTime('now'));
-//      //$microPost->setUser('kole_kole');
-//
-//        $manager->persist($microPost);
-//        $manager->flush();
+        $this->createMany(10, 'main_articles', function ($count) use ($manager) {
+            $microPost = new MicroPost();
+            $microPost->setText($this->faker->randomElement(self::$microPostTitles));
+            $microPost->setCreatedAt($this->faker->dateTimeBetween('-100 days', '-1 days'));
+
+            $microPost->setUser($this->getRandomReference('main_users'));
+
+            return $microPost;
+        });
+
+        $manager->flush();
     }
 }

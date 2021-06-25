@@ -68,7 +68,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
 
         return [
-            'username' => $request->request->get('username'),
+            'email' => $request->request->get('email'),
             'password' => $request->request->get('password'),
             'csrf_token' => $request->request->get('csrf_token'),
         ];
@@ -90,7 +90,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 //            throw new UsernameNotFoundException('Email could not be found.');
 //        }
 //
-        return $this->entityManager->getRepository(User::class)->findOneBy(['userName' => $credentials['username']]);
+        return $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
     }
 
     public function checkCredentials($credentials, UserInterface $user): bool

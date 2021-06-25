@@ -20,6 +20,7 @@ class UserRegistrationFormType extends AbstractType
     {
         $builder
             ->add('userName')
+            ->add('fullName')
             ->add('email')
             ->add('password');
 

@@ -1,0 +1,14 @@
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% endblock %}
+
+<div class="media text-muted pt-3">
+{#    {% set initials = post.user.fullName|split(' ') %}#}
+{#    {{ attribute(initials, 0)|first }}{{ attribute(initials, 1)|first }}#}
+
+    <i class='fab fa-twitter' style='font-size:24px;color:deepskyblue'></i>
+    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+        <span class="d-block"><strong class="text-gray-dark">@{{ post.user.fullName }}</strong><small>. {{ post.text }}</small></span>
+        {{ post.createdAt|date("m/d/Y. h:m:s") }}
+    </p>
+</div>

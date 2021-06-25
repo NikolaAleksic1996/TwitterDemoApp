@@ -20,7 +20,7 @@ use Symfony\Component\Routing\RouterInterface;
 /**
  * Class MicroPostController
  * @package App\Controller
- * @Route("/micro-post")
+ * @Route("/")
  */
 class MicroPostController extends AbstractController
 {
@@ -148,9 +148,9 @@ class MicroPostController extends AbstractController
     /**
      * @Route("/{id}", name="micro_post_postAction")
      */
-    public function postAction($id): Response
+    public function postAction(MicroPost $post): Response
     {
-        $post = $this->microPostRepository->find($id);
+        //$post = $this->microPostRepository->find($id);
 
         return new Response($this->render('micro-post/post.html.twig', [
             'post' => $post

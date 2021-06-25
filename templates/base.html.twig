@@ -14,9 +14,7 @@
 
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark navbar-bg">
-    <a style="margin-left: 75px;" class="navbar-brand space-brand" href="{{ path('micro_post_index') }}">
-        <img class="nav-profile-img rounded-circle">
-    </a>
+    <a style="color: #fff;" class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('micro_post_index') }}">Twitter demo App</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,12 +23,24 @@
             <li class="nav-item">
                 <a style="color: #fff;" class="nav-link" href="{{ path('micro_post_index') }}">Home</a>
             </li>
-            <li class="nav-item">
-                <a style="color: #fff;" class="nav-link" href="{{ path('app_login') }}">Login</a>
-            </li>
-            <li class="nav-item">
-                <a style="color: #fff;" class="nav-link" href="{{ path('app_register') }}">Register</a>
-            </li>
+            {% if is_granted('ROLE_USER') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{{ app.user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('micro_post_add') }}"> Add new post</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a style="color: #fff;" class="nav-link" href="{{ path('app_login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a style="color: #fff;" class="nav-link" href="{{ path('app_register') }}">Register</a>
+                </li>
+            {% endif %}
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -45,7 +55,13 @@
     </div>
 {% endfor %}
 
-{% block body %}{% endblock %}
+<main role="main" class="container">
+    <div class="my-3 p-3 rounded-1 box-shadow">
+        {% block body %}{% endblock %}
+    </div>
+</main>
+
+
 
 <footer class="footer">
     <div class="container text-center">
