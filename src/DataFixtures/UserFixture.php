@@ -9,6 +9,19 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserFixture extends BaseFixtures
 {
 
+    private static $userNames = [
+        'Bacon',
+        'Fabulous',
+        'Light',
+        'Mercury',
+        'Tan',
+        'Life',
+        'Main',
+        'Speed',
+        'Relaxing',
+        'Tan',
+    ];
+
     /**
      * @var UserPasswordEncoderInterface
      */
@@ -25,6 +38,7 @@ class UserFixture extends BaseFixtures
             $user = new User();
             $user->setEmail(sprintf('%dtest@gmail.com', $i));
             $user->setFullName($this->faker->firstName);
+            $user->setUserName($this->faker->randomElement(self::$userNames));
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 'test'

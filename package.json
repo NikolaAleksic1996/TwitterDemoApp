@@ -1,18 +1,43 @@
 {
-    "devDependencies": {
-        "@symfony/stimulus-bridge": "^2.0.0",
-        "@symfony/webpack-encore": "^1.0.0",
-        "core-js": "^3.0.0",
-        "regenerator-runtime": "^0.13.2",
-        "stimulus": "^2.0.0",
-        "webpack-notifier": "^1.6.0"
-    },
-    "license": "UNLICENSED",
-    "private": true,
-    "scripts": {
-        "dev-server": "encore dev-server",
-        "dev": "encore dev",
-        "watch": "encore dev --watch",
-        "build": "encore production --progress"
-    }
+  "devDependencies": {
+    "@babel/preset-react": "^7.14.5",
+    "@symfony/stimulus-bridge": "^2.0.0",
+    "@symfony/webpack-encore": "^1.0.0",
+    "core-js": "^3.0.0",
+    "react": "^17.0.2",
+    "regenerator-runtime": "^0.13.2",
+    "stimulus": "^2.0.0",
+    "webpack-notifier": "^1.6.0"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  },
+  "name": "TwitterDemoApp",
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "dependencies": {
+    "@api-platform/admin": "^2.6.4",
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
+    "bootstrap": "^5.0.1",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "redux-thunk": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikolaAleksic1996/TwitterDemoApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/NikolaAleksic1996/TwitterDemoApp/issues"
+  },
+  "homepage": "https://github.com/NikolaAleksic1996/TwitterDemoApp#readme",
+  "description": ""
 }

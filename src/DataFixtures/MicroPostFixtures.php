@@ -3,9 +3,11 @@
 namespace App\DataFixtures;
 
 use App\Entity\MicroPost;
+use App\Entity\User;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class MicroPostFixtures extends BaseFixtures 
+class MicroPostFixtures extends BaseFixtures implements DependentFixtureInterface
 {
 
     private static $microPostTitles = [
@@ -27,5 +29,13 @@ class MicroPostFixtures extends BaseFixtures
         });
 
         $manager->flush();
+    }
+
+    public function getDependencies()
+    {
+        return [
+            UserFixture::class,
+
+        ];
     }
 }

@@ -63,7 +63,7 @@ class MicroPostController extends AbstractController
      */
     public function indexAdminAction(): Response
     {
-        $html = $this->render('micro-post/index.html.twig', [
+        $html = $this->render('admin.html.twig', [
             'posts' => $this->microPostRepository->findBy([], ['createdAt' => 'DESC']),
         ]);
 

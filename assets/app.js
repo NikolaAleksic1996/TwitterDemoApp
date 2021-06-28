@@ -5,8 +5,15 @@
  * (and its CSS file) in your base layout (base.html.twig).
  */
 
-// any CSS you import will output into a single css file (app.css in this case)
-import './styles/app.css';
 
-// start the Stimulus application
-import './bootstrap';
+import React from 'react';
+import ReactDom from 'react-dom';
+
+const el = React.createElement(
+    'h2',
+    null,
+    'Hello from react',
+    React.createElement('span', null, 'Heart')
+);
+
+ReactDom.render(el, document.getElementById('lift-stuff-app'));
