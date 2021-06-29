@@ -5,15 +5,26 @@
  * (and its CSS file) in your base layout (base.html.twig).
  */
 
-
+// import ReactDom from 'react-dom';
 import React from 'react';
-import ReactDom from 'react-dom';
+import {render} from 'react-dom';
+import LogApp from './components/RepLog/LogApp';
 
-const el = React.createElement(
-    'h2',
-    null,
-    'Hello from react',
-    React.createElement('span', null, 'Heart')
+const shouldShowHeart = true;
+
+
+render(
+    <div>
+        <LogApp withHeart={shouldShowHeart} />
+        <LogApp withHeart={false} />
+    </div>,
+    document.getElementById('lift-stuff-app')
 );
 
-ReactDom.render(el, document.getElementById('lift-stuff-app'));
+
+// const el = React.createElement(
+//     'h2',
+//     null,
+//     'Hello from react',
+//     React.createElement('span', null, ' Heart')
+// );

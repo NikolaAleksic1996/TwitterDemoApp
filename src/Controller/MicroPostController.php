@@ -8,6 +8,7 @@ use App\Form\MicroPostType;
 use App\Repository\MicroPostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -147,6 +148,7 @@ class MicroPostController extends AbstractController
 
     /**
      * @Route("/{id}", name="micro_post_postAction")
+     * @ParamConverter("post", class="MicroPost")
      */
     public function postAction(MicroPost $post): Response
     {
