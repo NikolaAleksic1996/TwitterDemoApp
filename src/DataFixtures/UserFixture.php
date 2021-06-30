@@ -32,7 +32,7 @@ class UserFixture extends BaseFixtures
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function loadData(ObjectManager $manager)
+    protected function loadData(ObjectManager $manager)
     {
         $this->createMany(10, 'main_users', function ($i) use($manager) {
             $user = new User();

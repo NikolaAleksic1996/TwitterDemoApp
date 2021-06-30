@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Conversation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -69,8 +70,47 @@ class ConversationRepository extends ServiceEntityRepository
             ->setParameters([
                 'me' => $myId,
                 'otherUser' => $otherUserId
-            ])
-            ;
+            ]);
         return $qb->getQuery()->getResult();
     }
+
+    public function findConversationsByUser(int $userId)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->select('otherUser.userName', 'c.id as conversationId', 'lm.content', 'lm.createdAt')
+            ->innerJoin('c.participants', 'p', Join::WITH,
+                $qb->expr()->neq('p.user', ':user'))
+            ->innerJoin('c.participants', 'me', Join::WITH,
+                $qb->expr()->eq('me.user', ':user'))
+            ->leftJoin('c.lastMessage', 'lm')
+            ->innerJoin('me.user', 'meUser')
+            ->innerJoin('p.user', 'otherUser')
+            ->where('meUser.id = :user')
+            ->setParameter('user', $userId)
+            ->orderBy('lm.createdAt', 'DESC')
+            ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findAllOrdered()
+    {
+        $qb = $this->createQueryBuilder('conv')
+            ->addOrderBy('conv.id', 'DESC');
+        $query = $qb->getQuery();
+
+
+        return $query->execute();
+    }
+
+    public function search($search)
+    {
+        return $this->createQueryBuilder('conv')
+            ->andWhere('conv.id LIKE :$searchTerm')
+            ->setParameters('searchTerm', '%' . $search . '%')
+            ->getQuery()
+            ->execute();
+    }
+
 }

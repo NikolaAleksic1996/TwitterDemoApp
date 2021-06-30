@@ -16,7 +16,7 @@ class MicroPostFixtures extends BaseFixtures implements DependentFixtureInterfac
         'Light Speed Travel: Fountain of Youth or Fallacy',
     ];
 
-    public function loadData(ObjectManager $manager)
+    protected function loadData(ObjectManager $manager)
     {
         $this->createMany(10, 'main_articles', function ($count) use ($manager) {
             $microPost = new MicroPost();
@@ -31,11 +31,10 @@ class MicroPostFixtures extends BaseFixtures implements DependentFixtureInterfac
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             UserFixture::class,
-
         ];
     }
 }

@@ -48,16 +48,15 @@ class ConversationController extends AbstractController
 
 
     /**
-     * @Route("/{id}", name="getConversations")
+     * @Route("/", name="getCreateConversations", methods={"POST"})
      * @param Request $request
-     * @param int $id
      * @return JsonResponse
      * @throws Exception
      */
-    public function index(Request $request, int $id): JsonResponse
+    public function createConversationAction(Request $request): JsonResponse
     {
         $otherUser = $request->get('otherUser', 0);
-        $otherUser = $this->userRepository->find($id);
+        $otherUser = $this->userRepository->find($otherUser);
 
         if(is_null($otherUser)){
             throw new Exception("The user was not found!");
@@ -107,5 +106,32 @@ class ConversationController extends AbstractController
         return $this->json([
             'id' => $conversation->getId()
         ], Response::HTTP_CREATED, [], []);
+    }
+
+    /**
+     * @Route ("/", name="getConversations", methods={"GET"})
+     */
+    public function getConversationAction()
+    {
+        $conversations = $this->conversationRepository->findConversationsByUser($this->getUser()->getId());
+        dd($conversations);
+
+    }
+
+    /**
+     * @Route ("/list")
+     */
+    public function listAction(Request $request)
+    {
+        $search = $request->query->get('q');
+
+        if($search){
+            $conversations = $this->conversationRepository->search($search);
+            dd($conversations);
+        }else{
+            $conversations = $this->conversationRepository->findAllOrdered();
+        }
+
+        dd($conversations);
     }
 }
